@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 let recordedBlobs = [];
 let mediaRecorder = null;
 let mediaSource = null;
-let options = null;
 
 export function startRecording(stream) {
+  console.log(stream);
   let options = { mimeType: "video/webm" };
   recordedBlobs = [];
   try {

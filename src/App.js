@@ -5,7 +5,7 @@ import Recorder, { startRecording, stopRecording } from "./Recorder";
 // Global variable
 
 export default function App() {
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [stream, setStream] = useState(null);
   const videoRef = useRef(null);
@@ -18,7 +18,7 @@ export default function App() {
       stopRecording(video);
       setIsActive(false);
     } else {
-      startRecording(stream);
+      if (stream) startRecording(stream);
     }
     setIsRecording(!setIsRecording);
   };
