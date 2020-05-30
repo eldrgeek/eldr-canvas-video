@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = ({ isActive }) => {
+const Timer = ({ isActive, setStream }) => {
   const [seconds, setSeconds] = useState(0);
   const [diag, setDiag] = useState("none");
   const [count, setCount] = useState(1);
@@ -30,6 +30,7 @@ const Timer = ({ isActive }) => {
   const FRAC = 10;
   const FREQ = 1000;
   const draw = cnt => {
+    if (!ctx) return;
     let whole = Math.floor(cnt / FRAC);
     let part = cnt - whole * FRAC;
 
@@ -75,7 +76,7 @@ const Timer = ({ isActive }) => {
     if (videoRef.current && canvasRef.current) {
       const stream = canvasRef.current.captureStream(10);
       videoRef.current.srcObject = stream;
-      // if (setStream) setStream(stream);
+      if (setStream) setStream(stream);
     }
   }, [videoRef, canvasRef]);
   return (

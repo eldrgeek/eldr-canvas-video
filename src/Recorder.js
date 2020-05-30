@@ -78,6 +78,6 @@ function download(nam) {
 export default (Recorder = ({ stream }) => {
   useEffect(() => {
     if (stream) startRecording(stream);
-  }, [stream, video]);
+  }, [stream]);
   return "recorder";
 });

@@ -5,9 +5,10 @@ import Recorder, { startRecording, stopRecording } from "./Recorder";
 // Global variable
 
 export default function App() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
   const [stream, setStream] = useState(null);
+  const [diag, setDiag] = useState("no App diag");
   const videoRef = useRef(null);
   const [video, setVideo] = useState(null);
   useEffect(() => {
@@ -18,9 +19,11 @@ export default function App() {
       stopRecording(video);
       setIsActive(false);
     } else {
+      if (!stream) setDiag("no stream");
       if (stream) startRecording(stream);
     }
-    setIsRecording(!setIsRecording);
+    setIsRecording(!isRecording);
+    setDiag("g");
   };
   return (
     <div className="App">
@@ -37,6 +40,8 @@ export default function App() {
       <button onClick={toggleRecording}>
         {isRecording ? "Recording" : "Stopped"}
       </button>
+      <Recorder />
+      {diag}
       <video ref={videoRef} id="recorded" playsInline loop />
     </div>
   );
