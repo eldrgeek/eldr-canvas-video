@@ -59,8 +59,9 @@ export function stopRecording(video) {
   console.log("Recorded Blobs: ", recordedBlobs);
   video.src = window.URL.createObjectURL(superBuffer);
   video.controls = true;
+  download();
 }
-function download(nam) {
+function download() {
   const blob = new Blob(recordedBlobs, { type: "video/webm" });
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement("a");

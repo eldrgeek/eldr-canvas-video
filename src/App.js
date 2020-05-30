@@ -3,6 +3,7 @@ import Timer from "./Timer";
 import React, { useState, useRef, useEffect } from "react";
 import Recorder, { startRecording, stopRecording } from "./Recorder";
 // Global variable
+import VideoRecorder from "./VideoRecorder";
 
 export default function App() {
   const [isActive, setIsActive] = useState(true);
@@ -43,6 +44,7 @@ export default function App() {
       <Recorder />
       {diag}
       <video ref={videoRef} id="recorded" playsInline loop />
+      <VideoRecorder stream={stream} />
     </div>
   );
 }

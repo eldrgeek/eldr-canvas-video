@@ -11,8 +11,8 @@ const Timer = ({ isActive, setStream }) => {
     setDiag(`isActive ${isActive} : ${count}`);
   }, [isActive]);
   const [ctx, setCtx] = useState(null);
-  const IMG_HEIGHT = 80,
-    IMG_WIDTH = 100;
+  const IMG_HEIGHT = 500,
+    IMG_WIDTH = 500;
   function clearCanvas() {
     // clear canvas
     ctx.clearRect(0, 0, IMG_HEIGHT, IMG_WIDTH);
@@ -28,17 +28,16 @@ const Timer = ({ isActive, setStream }) => {
     ctx.fillRect(0, 0, 20, 20);
   }
   const FRAC = 10;
-  const FREQ = 1000;
+  const FREQ = 100;
   const draw = cnt => {
     if (!ctx) return;
     let whole = Math.floor(cnt / FRAC);
     let part = cnt - whole * FRAC;
-
     clearCanvas();
     ctx.scale(1, 1);
     ctx.fillStyle = "black";
-    ctx.font = "20px serif";
-    ctx.fillText(`${whole}:${part}`, 0, 40);
+    ctx.font = "80px serif";
+    ctx.fillText(`${whole}:${part}`, 20, 80);
     fillRect();
   };
 
