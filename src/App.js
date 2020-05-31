@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Recorder, { startRecording, stopRecording } from "./Recorder";
 // Global variable
 import VideoRecorder from "./VideoRecorder";
-
+import Uploader from "./Uploader";
 export default function App() {
   const [isActive, setIsActive] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
@@ -28,7 +28,7 @@ export default function App() {
   };
   return (
     <div className="App">
-      <Timer isActive={isActive} setStream={setStream} />
+      {/* <Timer isActive={isActive} setStream={setStream} />
       <button
         className={`button button-primary button-primary-${
           isActive ? "active" : "inactive"
@@ -41,10 +41,11 @@ export default function App() {
       <button onClick={toggleRecording}>
         {isRecording ? "Recording" : "Stopped"}
       </button>
-      <Recorder />
+      <Recorder /> */}
+      <Uploader />
       {diag}
       <video ref={videoRef} id="recorded" playsInline loop />
-      <VideoRecorder stream={stream} />
+      {/* <VideoRecorder stream={stream} /> */}
     </div>
   );
 }

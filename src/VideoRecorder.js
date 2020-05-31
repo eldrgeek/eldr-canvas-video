@@ -193,8 +193,8 @@ export default function VideoRecorder({ stream }) {
       <button id="download" disabled>
         Download
       </button>
-      <video id="gum" autoplay muted playsinline />
-      <video id="recorded" autoplay loop playsinline />
+      <video id="gum" autoPlay muted playsInline />
+      <video id="recorded" autoPlay loop playsInline />
 
       <a
         href="https://github.com/samdutton/simpl/blob/gh-pages/mediarecorder"
