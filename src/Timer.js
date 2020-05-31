@@ -1,54 +1,42 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = ({ isActive, setStream }) => {
+const Timer = ({ height = 15, width = 40, isActive, setStream }) => {
   const [seconds, setSeconds] = useState(0);
-  const [diag, setDiag] = useState("none");
-  const [count, setCount] = useState(1);
-  const [fillStyle, setFillStyle] = useState(0);
+  // const [fillStyle, setFillStyle] = useState(0);
   const canvasRef = React.useRef(null);
-  useEffect(() => {
-    setCount(count + 1);
-    setDiag(`isActive ${isActive} : ${count}`);
-  }, [isActive]);
+  const [fillStyle, setFillStyle] = useState(0);
   const [ctx, setCtx] = useState(null);
-  const IMG_HEIGHT = 500,
-    IMG_WIDTH = 500;
   function clearCanvas() {
     // clear canvas
-    ctx.clearRect(0, 0, IMG_HEIGHT, IMG_WIDTH);
+    ctx.clearRect(0, 0, width, height);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, width, height);
   }
 
   function fillRect() {
     const f = "#" + ("000000" + fillStyle.toString(16).toUpperCase()).slice(-6);
-    // console.log(
-    //   "#" + ("000000" + fillStyle.toString(16).toUpperCase()).slice(-6)
-    // );
     ctx.fillStyle = f;
     setFillStyle(fillStyle + 0x10);
-    ctx.fillRect(0, 0, 20, 20);
+    ctx.fillRect(0, 0, 10, 10);
   }
   const FRAC = 10;
   const FREQ = 100;
   const draw = cnt => {
-    if (!ctx) return;
     let whole = Math.floor(cnt / FRAC);
     let part = cnt - whole * FRAC;
     clearCanvas();
     ctx.scale(1, 1);
     ctx.fillStyle = "black";
-    ctx.font = "80px serif";
-    ctx.fillText(`${whole}:${part}`, 20, 80);
+    ctx.font = "10px serif";
+    ctx.fillText(`${whole}:${part}`, 15, 10);
     fillRect();
   };
 
-  const [time, setTime] = React.useState(0);
   React.useEffect(() => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
-
       if (canvas.getContext("2d")) {
         setCtx(canvas.getContext("2d"));
-        // draw(100);
       } else {
         alert("Canvas not supported!");
       }
@@ -68,32 +56,22 @@ const Timer = ({ isActive, setStream }) => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, seconds]);
-  const videoRef = React.useRef(null);
+  });
 
   useEffect(() => {
-    if (videoRef.current && canvasRef.current) {
+    if (canvasRef.current) {
       const stream = canvasRef.current.captureStream(10);
-      videoRef.current.srcObject = stream;
       if (setStream) setStream(stream);
     }
-  }, [videoRef, canvasRef]);
+  }, [canvasRef, setStream]);
   return (
     <div className="app">
-      {diag}
       <canvas
         ref={canvasRef}
         id="clock"
-        width={IMG_WIDTH}
-        height={IMG_HEIGHT}
+        width={width}
+        height={height}
         back="true"
-      />
-      <video
-        ref={videoRef}
-        id="video"
-        width={IMG_WIDTH}
-        height={IMG_HEIGHT}
-        autoPlay
       />
     </div>
   );

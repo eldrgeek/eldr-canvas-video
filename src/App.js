@@ -28,7 +28,7 @@ export default function App() {
   };
   return (
     <div className="App">
-      {/* <Timer isActive={isActive} setStream={setStream} />
+      <Timer isActive={isActive} setStream={setStream} />
       <button
         className={`button button-primary button-primary-${
           isActive ? "active" : "inactive"
@@ -41,8 +41,8 @@ export default function App() {
       <button onClick={toggleRecording}>
         {isRecording ? "Recording" : "Stopped"}
       </button>
-      <Recorder /> */}
-      <Uploader />
+      {/* <Recorder /> */}
+      {/* <Uploader /> */}
       {diag}
       <video ref={videoRef} id="recorded" playsInline loop />
       {/* <VideoRecorder stream={stream} /> */}
