@@ -1,6 +1,6 @@
-import React from "react";
-export default function VideoCanvas() {
-  const main = () => {
+import React, { useRef, useEffect, useState } from "react";
+export default function VideoCanvas({ stream, video }) {
+  const main = (video, stream) => {
     let processor = {
       timerCallback: function() {
         if (this.video.paused || this.video.ended) {
@@ -14,12 +14,18 @@ export default function VideoCanvas() {
       },
 
       doLoad: function() {
-        this.video = document.getElementById("video");
+        console.log("loaded");
+        var cloneVideo = document.querySelector("video#clone1");
+        this.video = video;
+
         this.c1 = document.getElementById("c1");
         this.ctx1 = this.c1.getContext("2d");
         this.c2 = document.getElementById("c2");
         this.ctx2 = this.c2.getContext("2d");
         let self = this;
+        this.video.srcObject = stream;
+        cloneVideo.srcOject = stream;
+        // cloneVideo.play();
         this.video.addEventListener(
           "play",
           function() {
@@ -47,10 +53,14 @@ export default function VideoCanvas() {
       }
     };
 
-    document.addEventListener("DOMContentLoaded", () => {
-      processor.doLoad();
-    });
+    processor.doLoad(video, stream);
   };
+  const videoRef = useRef(null);
+  useEffect(() => {
+    if (videoRef && stream) {
+      main(videoRef.current, stream);
+    }
+  });
   return (
     <div>
       {/* <style>
@@ -71,15 +81,18 @@ export default function VideoCanvas() {
       }
     </style> */}
 
-      <div>
+      <div style={{ backgroundColor: "lightgreen" }}>
+        <video width="40" heigth="15" id="clone1" autoPlay />
+
         <video
-          id="video"
-          src="media/video.mp4"
-          controls="true"
-          crossorigin="anonymous"
+          ref={videoRef}
+          id="videocanvas"
+          // src="media/video.mp4"
+          controls
+          crossOrigin="anonymous"
         />
       </div>
-      <div>
+      <div style={{ backgroundColor: "yellow" }}>
         <canvas id="c1" width="160" height="96" />
         <canvas id="c2" width="160" height="96" />
       </div>
