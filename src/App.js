@@ -45,7 +45,7 @@ export default function App() {
       {/* <Uploader /> */}
       {diag}
       <video ref={videoRef} id="recorded" playsInline loop />
-      {/* <VideoRecorder stream={stream} /> */}
+      <VideoRecorder stream={stream} />
     </div>
   );
 }
