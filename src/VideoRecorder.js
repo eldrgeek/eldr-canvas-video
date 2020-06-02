@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-"use strict";
+// "use strict";
 
 // This code is adapted from
 // https://rawgit.com/Miguelao/demos/master/mediarecorder.html
 
-import React, { useState, useRef, useEfect, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 const main = theStream => {
   var mediaSource = new MediaSource();
   mediaSource.addEventListener("sourceopen", handleSourceOpen, false);
@@ -65,19 +65,29 @@ const main = theStream => {
     console.log("getUserMedia() got stream: ", stream);
 
     window.stream = stream;
-    const theTrack = theStream.getVideoTracks()[0];
-    console.log("id", theTrack.id);
-    stream.addTrack(theTrack);
-    gumVideo.srcObject = stream;
-    window.xGV = gumVideo;
-    gumVideo.onplaying = () => {
-      const captureStream = gumVideo.captureStream().clone();
-      captureStream.removeTrack(captureStream.getVideoTracks()[0]);
-      cloneVideo.srcObject = captureStream;
+
+    window.theStream = theStream;
+    const getTrack = () => {
+      const theTrack = theStream.getVideoTracks()[0];
+      console.log("id", theTrack.id);
+      stream.addTrack(theTrack);
+      gumVideo.srcObject = stream;
+      window.xGV = gumVideo;
+      gumVideo.onplaying = () => {
+        const captureStream = gumVideo.captureStream().clone();
+        captureStream.removeTrack(captureStream.getVideoTracks()[0]);
+        // cloneVideo.srcObject = captureStream;
+        cloneVideo.srcObject = theStream;
+      };
     };
-    // window.xCS = gumVideo.captureSteam()
-    // cloneVideo.srcObject = gumVideo.captureSteam()//
+    if (theStream.active) {
+      getTrack();
+    } else {
+      theStream.onactive = getTrack();
+    }
   }
+  // window.xCS = gumVideo.captureSteam()
+  // cloneVideo.srcObject = gumVideo.captureSteam()//
 
   function errorCallback(error) {
     console.log("navigator.getUserMedia error: ", error);
@@ -196,7 +206,7 @@ export default function VideoRecorder({ stream }) {
       main(stream ? stream.clone() : null);
       // main()
     }
-  });
+  }, [videoRef, stream]);
   return (
     <div>
       {message}
@@ -210,7 +220,8 @@ export default function VideoRecorder({ stream }) {
       <video width="200" id="gum" autoPlay muted playsInline />
       <br />
       <video width="200" id="recorded" autoPlay loop playsInline />
-      <video width="200" id="clone" autoPlay loop playsInline />
+
+      <video width="40" heigth="15" id="clone" autoPlay loop playsInline />
 
       <a
         href="https://github.com/samdutton/simpl/blob/gh-pages/mediarecorder"
