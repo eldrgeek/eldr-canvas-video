@@ -65,6 +65,7 @@ const main = theStream => {
     console.log("getUserMedia() got stream: ", stream);
 
     window.stream = stream;
+
     window.theStream = theStream;
     const getTrack = () => {
       const theTrack = theStream.getVideoTracks()[0];
@@ -219,6 +220,7 @@ export default function VideoRecorder({ stream }) {
       <video width="200" id="gum" autoPlay muted playsInline />
       <br />
       <video width="200" id="recorded" autoPlay loop playsInline />
+
       <video width="40" heigth="15" id="clone" autoPlay loop playsInline />
 
       <a

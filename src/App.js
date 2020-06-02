@@ -6,6 +6,7 @@ import Recorder, { startRecording, stopRecording } from "./Recorder";
 import VideoRecorder from "./VideoRecorder";
 import Uploader from "./Uploader";
 import VideoCanvas from "./VideoCanvas";
+import LocalStreamVideo from "./LocalStreamVideo";
 export default function App() {
   const [isActive, setIsActive] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
@@ -29,7 +30,7 @@ export default function App() {
   };
   return (
     <div className="App">
-      <Timer isActive={isActive} setStream={setStream} />
+      {/* <Timer isActive={isActive} setStream={setStream} />
       <button
         className={`button button-primary button-primary-${
           isActive ? "active" : "inactive"
@@ -41,13 +42,14 @@ export default function App() {
 
       <button onClick={toggleRecording}>
         {isRecording ? "Recording" : "Stopped"}
-      </button>
-      <Recorder />
+      </button> */}
+      {/* <Recorder /> */}
       {/* <Uploader /> */}
       {diag}
-      {stream ? <VideoCanvas stream={stream} /> : ""}
+      {/* {stream ? <VideoCanvas stream={stream} /> : ""} */}
       {/* <video ref={videoRef} id="recorded" playsInline loop /> */}
-      {stream ? <VideoRecorder stream={stream} /> : ""}
+      {/* {stream ? <VideoRecorder stream={stream} /> : ""} */}
+      <LocalStreamVideo />
     </div>
   );
 }

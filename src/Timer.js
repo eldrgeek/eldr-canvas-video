@@ -12,7 +12,6 @@ const Timer = ({ height = 15, width = 40, isActive, setStream }) => {
     ctx.lineWidth = 1;
     ctx.strokeRect(0, 0, width, height);
   }
-
   function fillRect() {
     const f = "#" + ("000000" + fillStyle.toString(16).toUpperCase()).slice(-6);
     ctx.fillStyle = f;
