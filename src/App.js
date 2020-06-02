@@ -11,7 +11,6 @@ export default function App() {
   const [isActive, setIsActive] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
   const [stream, setStream] = useState(null);
-  const [diag, setDiag] = useState("no App diag");
   const videoRef = useRef(null);
   const [video, setVideo] = useState(null);
   useEffect(() => {
@@ -45,7 +44,6 @@ export default function App() {
       </button> */}
       {/* <Recorder /> */}
       {/* <Uploader /> */}
-      {diag}
       {/* {stream ? <VideoCanvas stream={stream} /> : ""} */}
       {/* <video ref={videoRef} id="recorded" playsInline loop /> */}
       {/* {stream ? <VideoRecorder stream={stream} /> : ""} */}
