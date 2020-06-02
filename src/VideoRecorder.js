@@ -29,6 +29,8 @@ const main = theStream => {
   var sourceBuffer;
 
   var gumVideo = document.querySelector("video#gum");
+  var cloneVideo = document.querySelector("video#clone");
+
   var recordedVideo = document.querySelector("video#recorded");
 
   var recordButton = document.querySelector("button#record");
@@ -63,7 +65,18 @@ const main = theStream => {
     console.log("getUserMedia() got stream: ", stream);
 
     window.stream = stream;
+    const theTrack = theStream.getVideoTracks()[0];
+    console.log("id", theTrack.id);
+    stream.addTrack(theTrack);
     gumVideo.srcObject = stream;
+    window.xGV = gumVideo;
+    gumVideo.onplaying = () => {
+      const captureStream = gumVideo.captureStream().clone();
+      captureStream.removeTrack(captureStream.getVideoTracks()[0]);
+      cloneVideo.srcObject = captureStream;
+    };
+    // window.xCS = gumVideo.captureSteam()
+    // cloneVideo.srcObject = gumVideo.captureSteam()//
   }
 
   function errorCallback(error) {
@@ -181,6 +194,7 @@ export default function VideoRecorder({ stream }) {
         setMessage("no stream");
       }
       main(stream ? stream.clone() : null);
+      // main()
     }
   });
   return (
@@ -193,8 +207,10 @@ export default function VideoRecorder({ stream }) {
       <button id="download" disabled>
         Download
       </button>
-      <video id="gum" autoPlay muted playsInline />
-      <video id="recorded" autoPlay loop playsInline />
+      <video width="200" id="gum" autoPlay muted playsInline />
+      <br />
+      <video width="200" id="recorded" autoPlay loop playsInline />
+      <video width="200" id="clone" autoPlay loop playsInline />
 
       <a
         href="https://github.com/samdutton/simpl/blob/gh-pages/mediarecorder"
