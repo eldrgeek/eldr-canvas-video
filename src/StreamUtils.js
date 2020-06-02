@@ -36,12 +36,80 @@ export function splitStream(stream) {
   });
 }
 
-export function TrackVideo({ track, height = 50 }) {
+export function StreamVIdeo({ stream, width = 50, height = 50 }) {
   const videoRef = useRef(null);
+  const [displayMode, setDisplayMode] = useState("none");
   useEffect(() => {
-    if (videoRef && track) {
-      videoRef.current.srcObject = track;
+    if (videoRef && stream) {
+      videoRef.current.srcObject = stream;
     }
-  }, [videoRef, track]);
-  return <video ref={videoRef} autoPlay controls />;
+  }, [videoRef, stream]);
+  return (
+    <div
+      style={{ backgroundColor: "red", height, width, display: displayMode }}
+    >
+      {/* <div style={{ position: "absolute" }}> */}
+      "above"
+      <video
+        height={height}
+        width={width}
+        onPlaying={() => setDisplayMode("block")}
+        ref={videoRef}
+        autoPlay
+      />
+      "beolow"
+      {/* </div>  */}
+    </div>
+  );
+}
+
+export function getTimerStream({ height = 15, width = 40 }) {
+  let fillStyle = 0;
+  let ctx = null;
+  function clearCanvas() {
+    // clear canvas
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, width, height);
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, width, height);
+  }
+  function fillRect() {
+    const f = "#" + ("000000" + fillStyle.toString(16).toUpperCase()).slice(-6);
+    ctx.fillStyle = f;
+    fillStyle += 0x10;
+    ctx.fillRect(0, 0, 10, 10);
+  }
+  const FRAC = 10;
+  const FREQ = 1000;
+  let seconds = 0;
+  const draw = cnt => {
+    console.log("tick");
+    let whole = Math.floor(cnt / FRAC);
+    let part = cnt - whole * FRAC;
+    clearCanvas();
+    ctx.scale(1, 1);
+    ctx.fillStyle = "black";
+    ctx.font = "10px serif";
+    ctx.fillText(`${whole}:${part}`, 15, 10);
+    fillRect();
+  };
+  const canvas = document.createElement("canvas");
+  ctx = canvas.getContext("2d");
+
+  if (window.Xinterval) clearInterval(window.Xinterval);
+  window.Xinterval = null;
+  let interval = null;
+  interval = setInterval(() => {
+    seconds++;
+    draw(seconds);
+  }, FREQ);
+  window.Xinterval = interval;
+  return canvas.captureStream();
+}
+
+const timerStream = getTimerStream({});
+exports.timerStream = timerStream;
+
+export function allStreams() {
+  const localSteam = getLocalStream;
 }

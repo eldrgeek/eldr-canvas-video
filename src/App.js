@@ -7,6 +7,7 @@ import VideoRecorder from "./VideoRecorder";
 import Uploader from "./Uploader";
 import VideoCanvas from "./VideoCanvas";
 import LocalStreamVideo from "./LocalStreamVideo";
+import { StreamVIdeo, timerStream } from "./StreamUtils";
 export default function App() {
   const [isActive, setIsActive] = useState(true);
   const [isRecording, setIsRecording] = useState(false);
@@ -47,7 +48,9 @@ export default function App() {
       {/* {stream ? <VideoCanvas stream={stream} /> : ""} */}
       {/* <video ref={videoRef} id="recorded" playsInline loop /> */}
       {/* {stream ? <VideoRecorder stream={stream} /> : ""} */}
-      <LocalStreamVideo />
+      {/* <LocalStreamVideo /> */}
+      <StreamVIdeo stream={timerStream} />
+      {/* <LocalStreamVideo /> */}
     </div>
   );
 }

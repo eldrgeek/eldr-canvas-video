@@ -25,6 +25,9 @@ let SimpleVideo = ({ stream, height = 200 }) => {
     </React.Fragment>
   );
 };
+
+let ShowDemoStreams = () => {};
+
 let LocalStream = ({ display = true, height = 200, width = 400 }) => {
   const videoRef = useRef(null);
   const [displayMode, setDisplayMode] = useState("none");
