@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Timer = ({ height = 15, width = 40, isActive, setStream }) => {
+const Timer = ({ height = 15, width = 40, isActive = true, setStream }) => {
   const [seconds, setSeconds] = useState(0);
   // const [fillStyle, setFillStyle] = useState(0);
   const canvasRef = React.useRef(null);
@@ -8,7 +8,8 @@ const Timer = ({ height = 15, width = 40, isActive, setStream }) => {
   const [ctx, setCtx] = useState(null);
   function clearCanvas() {
     // clear canvas
-    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, width, height);
     ctx.lineWidth = 1;
     ctx.strokeRect(0, 0, width, height);
   }
